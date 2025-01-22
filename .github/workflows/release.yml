@@ -9,7 +9,7 @@ on:
       - test-release
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
 
     steps:
@@ -44,15 +44,6 @@ jobs:
           # Run test script if present.
           npm run test --if-present
       
-  publish:
-    needs: build
-    
-    # Publish is valid only for release publication.
-    if: github.event_name == 'release'
-
-    runs-on: ubuntu-latest
-
-    steps:
       - name: Publish
         shell: bash
         env:
@@ -67,7 +58,12 @@ jobs:
             tag_args="--tag $tag"
           fi
           
+          if [ "${{ github.event_name }}" != "release" ]
+          then
+            dry_run_arg="--dry-run"
+          fi
+          
           # Create .npmignore to exclude hidden directories.
           echo /.\*/ > .npmignore
           
-          npm publish --access public $tag_args
+          npm publish --access public $tag_args $dry_run_arg
