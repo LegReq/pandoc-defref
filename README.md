@@ -9,13 +9,15 @@ term
 
 :   The definition of the term goes here.
 
-    Multiple paragraphs may be present, if the term requires an extended definition.
+    Multiple paragraphs may be present, if the term requires an extended
+    definition.
 ```
 
 then you can reference the term in other parts of the document like this:
 
 ```text
-Here, we make use of the ::term:: to show how the first paragraph is displayed as hover text and how the 
+Here, we make use of the ::term:: to show how the first paragraph is displayed
+as hover text and how the term is linked to its definition.
 ```
 
 For a detailed example, see the following in the `example` directory:
@@ -25,3 +27,5 @@ For a detailed example, see the following in the `example` directory:
 * example.html - Rendered HTML.
 * pandoc-pre-defref.yaml - Pandoc response file for generating example.json.
 * pandoc.yaml - Pandoc response file for generating example.html.
+
+You can view the rendered HTML [here](https://unpkg.com/@legreq/pandoc-defref/example/example.html).
