@@ -1,0 +1,9 @@
+verbosity: INFO
+from: markdown
+to: json
+standalone: true
+toc: true
+shift-heading-level-by: -1
+number-sections: true
+input-file: example/example.md
+output-file: example/example.json

@@ -1,0 +1,53 @@
+{
+  "name": "pandoc-defref",
+  "version": "1.0.0-beta",
+  "description": "Pandoc definition reference filter",
+  "type": "module",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LegReq/pandoc-defref.git"
+  },
+  "bugs": {
+    "url": "https://github.com/LegReq/pandoc-defref/issues"
+  },
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Kevin Dean",
+    "email": "kevin@legreq.com",
+    "url": "https://www.linkedin.com/in/kdean"
+  },
+  "keywords": [
+    "pandoc",
+    "filter",
+    "pandocfilter",
+    "definition",
+    "reference"
+  ],
+  "scripts": {
+    "lint": "eslint .",
+    "build-dist": "tsup src/index.ts --format cjs,esm --dts",
+    "pandoc": "pandoc --defaults example/pandoc.yaml",
+    "pandoc-pre-defref": "pandoc --defaults example/pandoc-pre-defref.yaml",
+    "defref": "tsx src/index.ts < example/example.json"
+  },
+  "bin": {
+    "pandoc-defref": "bin/pandoc-defref"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.18.0",
+    "@stylistic/eslint-plugin": "^2.13.0",
+    "eslint": "^9.18.0",
+    "eslint-config-love": "^117.0.0",
+    "eslint-plugin-jsdoc": "^50.6.2",
+    "ts-node": "^10.9.2",
+    "tsup": "^8.3.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.21.0"
+  },
+  "dependencies": {
+    "get-stdin": "^9.0.0",
+    "pandoc-filter": "^2.2.0"
+  }
+}

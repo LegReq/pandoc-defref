@@ -1,0 +1,59 @@
+# Definition Reference Examples
+
+## Pre-Prose Definitions
+
+Definitions may appear anywhere in the document. These definitions appear before they are referenced.
+
+Specification
+
+:   A specification often refers to a set of documented requirements to be satisfied by a material, design, product, or service. A specification is often a type of technical standard.
+
+    Source: [Wikipedia](https://en.wikipedia.org/wiki/Specification_(technical_standard))
+
+Compound words
+
+:   Two or more ::word::s combined to form a new single word or a phrase that acts like a single word.
+
+    There are three different types of compound words in grammar: open compound words with spaces between the words (*ice cream*), closed compound words with no spaces (*firefighter*), and hyphenated compound words (*up-to-date*).
+
+    Source: [Grammarly](https://www.grammarly.com/blog/grammar/open-and-closed-compound-words/)
+
+Word
+
+:   The bird is the word.
+
+    Source: [The Trashmen](https://www.youtube.com/watch?v=9Gc4QTqslN4)
+
+## The Prose
+
+When writing a ::specification::, it is often necessary to define terms to remove ::ambiguity::. This is especially true when the ::specification:: itself is defining new terms or adding new meaning to existing terms.
+
+This is especially true for ::compound words::, which are often novel in nature and highly specific to the document.
+
+Readers, especially those new to the subject, are often forced to jump around the document, to remind themselves of a term's meaning. To make things easier, this [Pandoc](https://pandoc.org/) filter uses [definition lists](https://pandoc.org/MANUAL.html#definition-lists) as sources for terms and a special syntax to link to those terms within the document body.
+
+The filter takes the first normal paragraph in the definition and uses it as ::hover text:: or, more formally, a ::CSS tooltip::. Clicking on the term takes the reader to the full definition. To reference a term, surround it with double-colons (e.g., ::::hover text::::), and to use double-colons directly, use four of them (e.g., ::::::::).
+
+## Post-Prose Definitions
+
+Definitions may appear anywhere in the document. These definitions appear after they are referenced.
+
+Ambiguity
+
+:   A word or expression that can be understood in two or more possible ways; an ambiguous word or expression.
+
+    The quality or state of being ambiguous especially in meaning.
+
+    Source: [Merriam Webster](https://www.merriam-webster.com/dictionary/ambiguity)
+
+Hover text
+
+:   Text that is displayed when the mouse or some other pointer is held over a displayed object.
+
+CSS tooltip
+
+:   An implementation of ::hover text:: specifically within a browser, using Cascading Style Sheet syntax to define how the text appears. See an example [here](https://www.w3schools.com/css/css_tooltip.asp).
+
+Extraneous definition
+
+:   This really shouldn't be here.

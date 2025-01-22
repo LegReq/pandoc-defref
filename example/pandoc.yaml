@@ -1,0 +1,12 @@
+verbosity: INFO
+from: markdown
+to: html
+standalone: true
+toc: true
+shift-heading-level-by: -1
+number-sections: true
+filters:
+  - type: json
+    path: bin/pandoc-defref-local
+input-file: example/example.md
+output-file: example/example.html
