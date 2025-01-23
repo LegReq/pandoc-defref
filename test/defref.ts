@@ -1,4 +1,10 @@
 import * as fs from "node:fs";
 import { exec } from "../src/index.js";
 
-await exec(fs.createReadStream("example/example.json"));
+const source = fs.createReadStream("example/example.json");
+
+try {
+    await exec(source);
+} finally {
+    source.close();
+}
