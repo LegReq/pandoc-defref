@@ -1,2 +1,4 @@
 #!/usr/bin/env node
-import "../dist/index.js";
+import { exec } from "../dist/index.js";
+
+exec();

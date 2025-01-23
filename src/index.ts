@@ -1,4 +1,4 @@
-import getStdin from "get-stdin";
+import type * as fs from "node:fs";
 import pandoc from "pandoc-filter";
 
 /**
@@ -354,46 +354,55 @@ function parseDefinitionReferences(inlines: pandoc.Inline[], nested: boolean): p
     return parsedInlines;
 }
 
-// Filter may generate format-specific output.
-const format = process.argv.length > 2 ? process.argv[2] : "";
+/**
+ * Read source in its entirety.
+ *
+ * @param source
+ * Source.
+ *
+ * @returns
+ * Input as string promise.
+ */
+async function readSource(source: fs.ReadStream | (NodeJS.ReadStream & { fd: 0 })): Promise<string> {
+    let result = "";
 
-getStdin().then(async (jsonString) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Result type is known.
-    const jsonData1 = JSON.parse(jsonString) as pandoc.PandocJson;
+    source.setEncoding("utf8");
 
-    // Parse definition lists on first pass.
-    return await pandoc.filter(jsonData1, ele => ele.t === "DefinitionList" ? parseDefinitionList(ele.c) : ele, format);
-}).then(async jsonData2 =>
-    // Parse definition references on second pass.
-    await pandoc.filter(jsonData2, (ele) => {
-        let result: pandoc.AnyElt;
+    for await (const chunk of source) {
+        result += chunk;
+    }
 
-        switch (ele.t) {
-            case "Plain":
-            case "Para":
-                result = pandoc.elt(ele.t, 1)(parseDefinitionReferences(ele.c, false));
-                break;
+    return result;
+}
 
-            case "Str":
-                // Allow double-colon by escaping the second one.
-                result = pandoc.Str(ele.c.replace(":\\:", "::"));
-                break;
+/**
+ * Execute the filter.
+ *
+ * @param source
+ * Input source; defaults to stdin.
+ */
+export async function exec(source: fs.ReadStream | (NodeJS.ReadStream & { fd: 0 }) = process.stdin): Promise<void> {
+    // Filter may generate format-specific output.
+    const format = process.argv.length > 2 ? process.argv[2] : "";
 
-            default:
-                result = ele;
-                break;
-        }
+    await readSource(source).then(async (jsonString) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Result type is known.
+        const jsonData1 = JSON.parse(jsonString) as pandoc.PandocJson;
 
-        return result;
-    }, format)
-).then((outputData) => {
-    // Write JSON to stdout.
-    process.stdout.write(JSON.stringify(outputData));
-}).then(() => {
-    // Log error for each unreferenced term.
-    definitionsMap.values().filter(definition => !definition.referenced).forEach((definition) => {
-        console.error(`Unreferenced term "${definition.term}"`);
+        // Parse definition lists on first pass.
+        return await pandoc.filter(jsonData1, ele => ele.t === "DefinitionList" ? parseDefinitionList(ele.c) : ele, format);
+    }).then(async jsonData2 =>
+        // Parse definition references on second pass.
+        await pandoc.filter(jsonData2, ele => ele.t === "Plain" || ele.t === "Para" ? pandoc.elt(ele.t, 1)(parseDefinitionReferences(ele.c, false)) : ele, format)
+    ).then((outputData) => {
+        // Write JSON to stdout.
+        process.stdout.write(JSON.stringify(outputData));
+    }).then(() => {
+        // Log error for each unreferenced term.
+        definitionsMap.values().filter(definition => !definition.referenced).forEach((definition) => {
+            console.error(`Unreferenced term "${definition.term}"`);
+        });
+    }).catch((e: unknown) => {
+        console.error(e);
     });
-}).catch((e: unknown) => {
-    console.error(e);
-});
+}

@@ -29,7 +29,7 @@
     "build-dist": "tsup src/index.ts --format cjs,esm --dts",
     "pandoc": "pandoc --defaults example/pandoc.yaml",
     "pandoc-pre-defref": "pandoc --defaults example/pandoc-pre-defref.yaml",
-    "defref": "tsx src/index.ts < example/example.json"
+    "defref": "tsx test/defref.ts"
   },
   "bin": {
     "pandoc-defref": "bin/pandoc-defref"
@@ -47,7 +47,6 @@
     "typescript-eslint": "^8.21.0"
   },
   "dependencies": {
-    "get-stdin": "^9.0.0",
     "pandoc-filter": "^2.2.0"
   }
 }

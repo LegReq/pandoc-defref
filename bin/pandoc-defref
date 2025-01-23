@@ -1,2 +1,4 @@
 #!/usr/bin/env node
-import "@legreq/pandoc-defref";
+import { exec } from "@legreq/pandoc-defref";
+
+exec();
