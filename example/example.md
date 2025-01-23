@@ -26,9 +26,7 @@ Word
 
 ## The Prose
 
-When writing a ::specification::, it is often necessary to define terms to remove ::ambiguity::. This is especially true when the ::specification:: itself is defining new terms or adding new meaning to existing terms.
-
-This is especially true for ::compound words::, which are often novel in nature and highly specific to the document.
+When writing a ::specification::, it is often necessary to define terms to remove ::ambiguity::. This is especially true when the ::specification:: is defining new terms, adding new meaning to existing terms, or creating ::compound words:: which are novel in nature and highly specific to the document.
 
 Readers, especially those new to the subject, are often forced to jump around the document, to remind themselves of a term's meaning. To make things easier, this [Pandoc](https://pandoc.org/) filter uses [definition lists](https://pandoc.org/MANUAL.html#definition-lists) as sources for terms and a special syntax to link to those terms within the document body.
 
