@@ -26,7 +26,7 @@
   ],
   "scripts": {
     "lint": "eslint .",
-    "build-dist": "tsup src/index.ts --format cjs,esm --dts",
+    "build-dist": "tsup src/index.ts --format esm --dts",
     "pandoc": "pandoc --defaults example/pandoc.yaml",
     "pandoc-pre-defref": "pandoc --defaults example/pandoc-pre-defref.yaml",
     "defref": "tsx test/defref.ts"
