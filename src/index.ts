@@ -1,3 +1,5 @@
+/* eslint-disable no-console -- Console application. */
+
 import type * as fs from "node:fs";
 import pandoc from "pandoc-filter";
 
