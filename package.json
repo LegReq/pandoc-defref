@@ -35,7 +35,7 @@
     "pandoc-defref": "bin/pandoc-defref"
   },
   "devDependencies": {
-    "@legreq/tsdev": "^1.0.2-beta",
+    "@legreq/tsdev": "beta",
     "eslint": "^9.19.0",
     "ts-node": "^10.9.2",
     "tsup": "^8.3.6",
