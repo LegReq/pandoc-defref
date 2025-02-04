@@ -408,5 +408,8 @@ export async function exec(source: fs.ReadStream | (NodeJS.ReadStream & { fd: 0 
         });
     }).catch((e: unknown) => {
         console.error(e);
+
+        // Force Pandoc to terminate.
+        process.exit(1);
     });
 }
