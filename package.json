@@ -1,6 +1,6 @@
 {
   "name": "@legreq/pandoc-defref",
-  "version": "1.0.7-beta",
+  "version": "1.0.8-beta",
   "description": "Pandoc definition reference filter",
   "type": "module",
   "main": "dist/index.js",
