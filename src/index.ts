@@ -401,8 +401,10 @@ export async function exec(source: fs.ReadStream | (NodeJS.ReadStream & { fd: 0 
         process.stdout.write(JSON.stringify(outputData));
     }).then(() => {
         // Log error for each unreferenced term.
-        definitionsMap.values().filter(definition => !definition.referenced).forEach((definition) => {
-            console.error(`Unreferenced term "${definition.term}"`);
+        definitionsMap.forEach((definition) => {
+            if (!definition.referenced) {
+                console.error(`Unreferenced term "${definition.term}"`);
+            }
         });
     }).catch((e: unknown) => {
         console.error(e);
