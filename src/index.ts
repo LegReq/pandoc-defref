@@ -13,6 +13,11 @@ interface Definition {
     term: string;
 
     /**
+     * Anchor.
+     */
+    href: string;
+
+    /**
      * Title (hover text), the first normal paragraph in the definition.
      */
     title: string | undefined;
@@ -24,7 +29,7 @@ interface Definition {
 }
 
 /**
- * Definitions map, keyed on href anchor.
+ * Definitions map, keyed on lowercase term.
  */
 const definitionsMap = new Map<string, Definition>();
 
@@ -78,20 +83,6 @@ function parseString(inlines: pandoc.Inline[]): string {
 }
 
 /**
- * Build href anchor for a term.
- *
- * @param term
- * Term.
- *
- * @returns
- * Href anchor.
- */
-function hrefFor(term: string): string {
-    // Prefix with "def-" and replace all non-alphanumeric characters with hyphen.
-    return `def-${term.replace(/[^A-Za-z0-9]/g, "-").toLowerCase()}`;
-}
-
-/**
  * Parse a definition list.
  *
  * @param definitionList
@@ -107,7 +98,9 @@ function parseDefinitionList(definitionList: pandoc.EltMap["DefinitionList"]): p
         const [termComponents, definitionBlocks] = definitionEntry;
 
         const term = parseString(termComponents);
-        const href = hrefFor(term);
+
+        // Prefix with "def-" and replace all non-alphanumeric characters with hyphen.
+        let href = `def-${term.replace(/[^A-Za-z0-9]/g, "-").toLowerCase()}`
 
         let title: string | undefined = undefined;
 
@@ -130,16 +123,33 @@ function parseDefinitionList(definitionList: pandoc.EltMap["DefinitionList"]): p
             }
         }
 
-        // Replace term components with anchored term components.
-        anchoredDefinitionEntries.push([[pandoc.Span([
-            href,
-            [],
-            []
-        ], termComponents)], definitionEntry[1]]);
+        if (title !== undefined && /^::((?!::).)+::$/.test(title)) {
+            const aliasFor = title.substring(2, title.length - 2).trim();
 
-        if (!definitionsMap.has(href)) {
-            definitionsMap.set(href, {
+            const definition = definitionsMap.get(aliasFor.toLowerCase());
+
+            // Use href and title from aliased term if available.
+            if (definition !== undefined) {
+                href = definition.href;
+                title = definition.title;
+            } else {
+                console.error(`Term "${aliasFor}" must be defined before alias`);
+            }
+        } else {
+            // Replace term components with anchored term components.
+            anchoredDefinitionEntries.push([[pandoc.Span([
+                href,
+                [],
+                []
+            ], termComponents)], definitionEntry[1]]);
+        }
+
+        const lowerCaseTerm = term.toLowerCase();
+
+        if (!definitionsMap.has(lowerCaseTerm)) {
+            definitionsMap.set(lowerCaseTerm, {
                 term,
+                href,
                 title,
                 referenced: false
             });
@@ -271,9 +281,9 @@ function parseDefinitionReferences(inlines: pandoc.Inline[], nested: boolean): p
 
                                 // Swallow empty term.
                                 if (term !== "") {
-                                    const href = hrefFor(term);
+                                    const lowerCaseTerm = term.toLowerCase();
 
-                                    const definition = definitionsMap.get(href);
+                                    const definition = definitionsMap.get(lowerCaseTerm);
 
                                     if (definition !== undefined) {
                                         definition.referenced = true;
@@ -287,7 +297,7 @@ function parseDefinitionReferences(inlines: pandoc.Inline[], nested: boolean): p
                                         [],
                                         []
                                     ], termInlines, [
-                                        `#${href}`,
+                                        `#${definition?.href}`,
                                         definition?.title ?? ""
                                     ]);
 

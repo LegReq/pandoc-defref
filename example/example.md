@@ -10,13 +10,21 @@ Specification
 
     Source: [Wikipedia](https://en.wikipedia.org/wiki/Specification_(technical_standard))
 
-Compound words
+Specifications
 
-:   Two or more ::word::s combined to form a new single word or a phrase that acts like a single word.
+:   ::Specification::
+
+Compound word
+
+:   Two or more ::words:: combined to form a new single ::word:: or a phrase that acts like a single word.
 
     There are three different types of compound words in grammar: open compound words with spaces between the words (*ice cream*), closed compound words with no spaces (*firefighter*), and hyphenated compound words (*up-to-date*).
 
     Source: [Grammarly](https://www.grammarly.com/blog/grammar/open-and-closed-compound-words/)
+
+Compound words
+
+:   ::Compound word::
 
 Word
 
@@ -24,9 +32,15 @@ Word
 
     Source: [The Trashmen](https://www.youtube.com/watch?v=9Gc4QTqslN4)
 
+Words
+
+:   ::Word::
+
 ## The Prose
 
-When writing a ::specification::, it is often necessary to define terms to remove ::ambiguity::. This is especially true when the ::specification:: is defining new terms, adding new meaning to existing terms, or creating ::compound words:: which are novel in nature and highly specific to the document.
+When writing ::specifications::, it is often necessary to define terms to remove ::ambiguity::. This is especially true when a ::specification:: is defining new terms, adding new meaning to existing terms, or creating ::compound words:: which are novel in nature and highly specific to the document.
+
+It's also common for a ::specification:: to define an ::Abbreviation Just Because:: (::AJB::), similar to a ::compound word::, which can be confusing to new readers.
 
 Readers, especially those new to the subject, are often forced to jump around the document, to remind themselves of a term's meaning. To make things easier, this [Pandoc](https://pandoc.org/) filter uses [definition lists](https://pandoc.org/MANUAL.html#definition-lists) as sources for terms and a special syntax to link to those terms within the document body.
 
@@ -43,6 +57,14 @@ Ambiguity
     The quality or state of being ambiguous especially in meaning.
 
     Source: [Merriam Webster](https://www.merriam-webster.com/dictionary/ambiguity)
+
+Abbreviation Just Because
+
+:   An Abbreviation Just Because (AJB) is an arbitrary abbreviation consisting of the first letters of the term, used to demonstrate aliasing.
+
+AJB
+
+:   ::Abbreviation Just Because::
 
 Hover text
 
