@@ -100,7 +100,7 @@ function parseDefinitionList(definitionList: pandoc.EltMap["DefinitionList"]): p
         const term = parseString(termComponents);
 
         // Prefix with "def-" and replace all non-alphanumeric characters with hyphen.
-        let href = `def-${term.replace(/[^A-Za-z0-9]/g, "-").toLowerCase()}`
+        let href = `def-${term.replace(/[^A-Za-z0-9]/g, "-").toLowerCase()}`;
 
         let title: string | undefined = undefined;
 
