@@ -116,7 +116,7 @@ function parseDefinitionList(definitionList: pandoc.EltMap["DefinitionList"]): p
         const term = parseString(termComponents);
 
         // Prefix with "def-" and replace all non-alphanumeric characters with hyphen.
-        let href = `def-${term.replace(/[^A-Za-z0-9]/g, "-").toLowerCase()}`;
+        const href = `def-${term.replace(/[^A-Za-z0-9]/g, "-").toLowerCase()}`;
 
         let title: string | undefined = undefined;
 
@@ -139,19 +139,25 @@ function parseDefinitionList(definitionList: pandoc.EltMap["DefinitionList"]): p
             }
         }
 
+        let definition: Definition | undefined;
+
         if (title !== undefined && /^::((?!::).)+::$/.test(title)) {
             const aliasFor = title.substring(2, title.length - 2).trim();
 
-            const definition = definitionsMap.get(aliasFor.toLowerCase());
+            // Use single definition for original term and all aliases.
+            definition = definitionsMap.get(aliasFor.toLowerCase());
 
-            // Use href and title from aliased term if available.
-            if (definition !== undefined) {
-                href = definition.href;
-                title = definition.title;
-            } else {
+            if (definition === undefined) {
                 console.error(`Term "${aliasFor}" must be defined before alias`);
             }
         } else {
+            definition = {
+                term,
+                href,
+                title,
+                referenced: false
+            };
+
             // Replace term components with anchored term components.
             anchoredDefinitionEntries.push([[pandoc.Span([
                 href,
@@ -160,17 +166,14 @@ function parseDefinitionList(definitionList: pandoc.EltMap["DefinitionList"]): p
             ], termComponents)], definitionEntry[1]]);
         }
 
-        const lowerCaseTerm = term.toLowerCase();
+        if (definition !== undefined) {
+            const lowerCaseTerm = term.toLowerCase();
 
-        if (!definitionsMap.has(lowerCaseTerm)) {
-            definitionsMap.set(lowerCaseTerm, {
-                term,
-                href,
-                title,
-                referenced: false
-            });
-        } else {
-            console.error(`Duplicate definition for term "${term}"`);
+            if (!definitionsMap.has(lowerCaseTerm)) {
+                definitionsMap.set(lowerCaseTerm, definition);
+            } else {
+                console.error(`Duplicate definition for term "${term}"`);
+            }
         }
     }
 

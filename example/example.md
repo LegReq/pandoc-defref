@@ -40,7 +40,7 @@ Words
 
 When writing ::specifications::, it is often necessary to define terms to remove ::ambiguity::. This is especially true when a ::specification:: is defining new terms, adding new meaning to existing terms, or creating ::compound words:: which are novel in nature and highly specific to the document.
 
-It's also common for a ::specification:: to define an ::Abbreviation Just Because:: (::AJB::), similar to a ::compound word::, which can be confusing to new readers.
+It's also common for a ::specification:: to define an ::Abbreviation Just Because:: (AJB), similar to a ::compound word::, which can be confusing to new readers.
 
 Readers, especially those new to the subject, are often forced to jump around the document, to remind themselves of a term's meaning. To make things easier, this [Pandoc](https://pandoc.org/) filter uses [definition lists](https://pandoc.org/MANUAL.html#definition-lists) as sources for terms and a special syntax to link to those terms within the document body.
 
