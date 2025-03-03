@@ -1,6 +1,6 @@
 {
   "name": "@legreq/pandoc-defref",
-  "version": "1.0.10-beta",
+  "version": "1.0.11-beta",
   "description": "Pandoc definition reference filter",
   "type": "module",
   "main": "dist/index.js",
@@ -35,12 +35,7 @@
     "pandoc-defref": "bin/pandoc-defref"
   },
   "devDependencies": {
-    "@legreq/tsdev": "beta",
-    "eslint": "^9.19.0",
-    "ts-node": "^10.9.2",
-    "tsup": "^8.3.6",
-    "tsx": "^4.19.2",
-    "typescript": "^5.7.3"
+    "@legreq/tsdev": "beta"
   },
   "dependencies": {
     "pandoc-filter": "^2.2.0"
