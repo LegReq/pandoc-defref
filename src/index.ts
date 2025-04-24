@@ -154,7 +154,7 @@ function parseDefinitionList(definitionList: pandoc.EltMap["DefinitionList"]): p
             definition = {
                 term,
                 href,
-                title,
+                title: title?.replaceAll(/::(.*?)::/g, "$1"),
                 referenced: false
             };
 
